@@ -1,0 +1,344 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-support: var(--support);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ink: var(--foreground);
+}
+
+:root {
+  /* L'Atelier Réseau — nuit bleutée calme */
+  --radius: 10px;
+
+  --background: #07131f; /* Night Core */
+  --surface: #0d2030; /* Deep Network */
+  --panel: #143044; /* Active Panel */
+  --card: #0d2030;
+  --card-foreground: #f3f7fa;
+  --foreground: #f3f7fa; /* Clear Text */
+  --muted: #143044;
+  --muted-foreground: #a9bac7; /* Muted Text */
+  --border: #284257; /* Quiet Border */
+  --ring: #f2b544;
+
+  --primary: #f2b544; /* Service Amber */
+  --primary-foreground: #07131f;
+  --primary-pressed: #d49320;
+
+  --secondary: #143044;
+  --secondary-foreground: #f3f7fa;
+
+  --accent: #143044;
+  --accent-foreground: #f3f7fa;
+
+  --support: #68a7c8; /* Support Blue */
+  --success: #4faf7b;
+  --danger: #e16666;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+@utility brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+}
+@utility brand-glyph {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.04em;
+  color: var(--color-foreground);
+  line-height: 1;
+}
+@utility brand-glyph-accent {
+  color: var(--color-primary);
+}
+@utility brand-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: var(--color-foreground);
+}
+@utility brand-sub {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--color-muted-foreground);
+  letter-spacing: 0;
+}
+
+@utility command-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.9rem 0.9rem 0.9rem 0.75rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  background: transparent;
+  color: var(--color-foreground);
+  transition:
+    background 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  min-height: 64px;
+}
+@utility command-row-active {
+  background: var(--color-surface);
+  border-left-color: var(--color-primary);
+  transform: translateX(2px);
+}
+@utility command-row-hover {
+  background: color-mix(in oklab, var(--color-surface) 60%, transparent);
+}
+@utility command-icon {
+  display: grid;
+  place-items: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: 6px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-support);
+  flex-shrink: 0;
+}
+@utility command-icon-active {
+  background: color-mix(in oklab, var(--color-primary) 15%, transparent);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@utility rail-v {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-border) 12%,
+    var(--color-border) 88%,
+    transparent 100%
+  );
+  width: 1px;
+}
+@utility rail-h {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-border) 12%,
+    var(--color-border) 88%,
+    transparent 100%
+  );
+  height: 1px;
+}
+
+@utility container-hub {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@utility surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+@utility panel-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 0.75rem 1.1rem;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+@utility btn-primary-hover {
+  background: var(--color-primary-pressed);
+}
+
+@utility btn-support {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 0.75rem 1.1rem;
+  background: transparent;
+  color: var(--color-support);
+  border: 1px solid var(--color-support);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 0.75rem 1.1rem;
+  background: transparent;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--color-muted-foreground);
+  font-weight: 600;
+}
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  color: var(--color-muted-foreground);
+}
+
+@utility skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  z-index: 100;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transform: translateY(-150%);
+  transition: transform 180ms ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@utility mobile-nav-scroll {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.35rem 0;
+}
+.mobile-nav-scroll::-webkit-scrollbar {
+  display: none;
+}
