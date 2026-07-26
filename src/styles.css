@@ -1097,3 +1097,193 @@ button {
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
+
+.mobile-nav,
+.mobile-sheet-backdrop {
+  display: none;
+}
+
+@media (max-width: 759px) {
+  body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+  .mobile-nav {
+    position: fixed;
+    z-index: 80;
+    inset-inline: 0;
+    bottom: 0;
+    display: block;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid #33586d;
+    background: #00111ff2;
+    box-shadow: 0 -8px 24px #00111f99;
+    transform: translateY(0);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mobile-nav.is-hidden {
+    transform: translateY(calc(100% + 8px));
+  }
+  .mobile-nav > div {
+    max-width: 520px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .mobile-nav a,
+  .mobile-nav button {
+    position: relative;
+    height: 64px;
+    min-width: 0;
+    padding: 7px 2px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 0;
+    border-inline-end: 1px solid #17384c;
+    background: transparent;
+    color: #9bb3c2;
+    cursor: pointer;
+  }
+  .mobile-nav a:last-of-type {
+    border-inline-end: 0;
+  }
+  .mobile-nav svg {
+    width: 22px;
+    height: 22px;
+  }
+  .mobile-nav span {
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .mobile-nav .is-active {
+    background: #115079;
+    color: #e5eef3;
+  }
+  .mobile-nav .is-active::before {
+    content: "";
+    position: absolute;
+    inset-inline: 18%;
+    top: -1px;
+    height: 3px;
+    background: #62afd6;
+  }
+  .mobile-nav .is-primary {
+    border-inline-end: 0;
+    background: #f3ac29;
+    color: #00111f;
+  }
+  .mobile-nav .is-primary::before {
+    background: #e5eef3;
+  }
+  .mobile-nav a:active,
+  .mobile-nav button:active {
+    background-color: #0b354f;
+  }
+  .mobile-nav .is-primary:active {
+    background-color: #d99312;
+  }
+
+  .mobile-sheet-backdrop {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    background: #00111fcc;
+  }
+  .mobile-contact-sheet {
+    width: min(100%, 520px);
+    margin-inline: auto;
+    padding: 20px 18px calc(18px + env(safe-area-inset-bottom));
+    border: 1px solid #33586d;
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    background: #061d2d;
+    color: #e5eef3;
+    animation: mobile-sheet-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mobile-contact-sheet > header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .mobile-contact-sheet h2 {
+    margin: 3px 0 0;
+    font-size: 22px;
+    line-height: 1.15;
+  }
+  .mobile-contact-sheet header small {
+    color: #58cb8e;
+  }
+  .mobile-contact-sheet header > button {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #33586d;
+    border-radius: 5px;
+    background: #082a41;
+  }
+  .mobile-contact-sheet header svg {
+    width: 20px;
+  }
+  .mobile-contact-actions {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .mobile-contact-actions > a,
+  .mobile-contact-actions > button {
+    min-height: 72px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border: 1px solid #33586d;
+    border-radius: 5px;
+    background: #082a41;
+    color: #e5eef3;
+    text-align: left;
+  }
+  .mobile-contact-actions > .whatsapp {
+    border-color: #347f5a;
+    background: #164d38;
+  }
+  .mobile-contact-actions svg {
+    width: 24px;
+    flex: 0 0 24px;
+  }
+  .mobile-contact-actions b,
+  .mobile-contact-actions small {
+    display: block;
+  }
+  .mobile-contact-actions small {
+    color: #9bb3c2;
+    font-weight: 400;
+  }
+  .mobile-contact-sheet > p {
+    margin: 14px 0 0;
+    color: #9bb3c2;
+    font-size: 12px;
+  }
+}
+
+@keyframes mobile-sheet-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

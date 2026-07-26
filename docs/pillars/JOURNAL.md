@@ -20,6 +20,13 @@ Chronologie factuelle des travaux. Chaque entrée note le contexte, l'action, le
 - document : contrat sombre reconstruit et sidecar actualisé.
 - optimize : portrait principal décliné en WebP 640/960/1400 ; transfert réduit de 2,24 Mo à 22–79 Ko.
 - harden : ancre Projets, icônes d'en-tête, réseaux sociaux, notes et vCard vérifiés.
-- dapt : cibles tactiles de 44 px, safe area et mouvement réduit.
+- adapt : cibles tactiles de 44 px, safe area et mouvement réduit.
 - polish : aucun débordement à 1536, 864, 390 et 320 px ; aucune erreur console.
 - Audit final : 0 warning, 55 avis de nuances chromatiques exactes contre 120 écarts avant correction.
+
+## Navigation mobile adaptative
+
+- Étude de la barre mobile du dépôt privé DrShop : auto-masquage directionnel, safe area, panneau d’actions et restauration du focus.
+- Adaptation DMAMPRO : Accueil, Assistance, Projets, Notes et Contact, avec section active détectée automatiquement.
+- Améliorations : barre toujours visible aux extrémités, panneau Contact réel, verrouillage du défilement, piège de focus et fermeture par Échap.
+- Préversion Netlify compilée : https://6a65eab67cac9a4b1350596b--dmam-pro-hub.netlify.app.

@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import { openVCard, whatsappLink, mailtoLink, telLink, VCARD_DATA } from "@/lib/vcard";
 import { visibleProjects, safeProjectWebsiteUrl } from "@/lib/projects";
+import { MobileNav } from "@/components/layout/MobileNav";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -403,6 +404,7 @@ function Dashboard() {
           </span>
         </div>
       </aside>
+      <MobileNav />
     </div>
   );
 }

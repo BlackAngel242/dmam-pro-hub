@@ -19,3 +19,10 @@
 - En-tête 58, héros 441, parcours 66, tableau 342, dock 117.
 - Tablette : 864 × 1821 avec rails 157 / 554 / 153.
 - Mobile : aucune largeur horizontale excédentaire.
+
+## Navigation mobile
+
+- Sous 760 px, le hub utilise une barre inférieure à cinq commandes : Accueil, Assistance, Projets, Notes et Contact.
+- Elle s’efface en descendant, revient en remontant et reste visible près du début et de la fin de page.
+- Contact ouvre une feuille d’actions réelles : WhatsApp, e-mail, téléphone et enregistrement vCard.
+- Les commandes mobiles doivent rester accessibles au clavier, respecter la safe area et mesurer au moins 44 px.

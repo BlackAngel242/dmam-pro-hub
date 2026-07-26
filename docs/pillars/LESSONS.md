@@ -72,6 +72,14 @@
 
 **Cause :** le test agissait après domcontentloaded, avant la fin de l'hydratation client.
 
-**Solution validée :** attendre explicitement l'hydratation, puis vérifier ria-pressed et instrumenter l'ancre Blob créée par openVCard.
+**Solution validée :** attendre explicitement l'hydratation, puis vérifier aria-pressed et instrumenter l'ancre Blob créée par openVCard.
 
 **Prévention :** distinguer HTML SSR disponible et interactions React prêtes ; chaque test interactif doit attendre un signal client déterministe.
+
+## 9. Encodage après écriture distante
+
+**Symptôme :** des libellés français créés via une chaîne PowerShell/API apparaissent en mojibake (RÃ©ponse).
+
+**Solution validée :** relire le fichier comme UTF-8, corriger les séquences touchées et réécrire sans BOM avant compilation.
+
+**Prévention :** rechercher Ã|Â|â après toute création distante contenant des accents, puis vérifier les libellés rendus avant publication.

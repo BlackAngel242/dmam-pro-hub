@@ -53,18 +53,35 @@ export function MobileNav() {
   useEffect(() => {
     if (!contactOpen) return;
     const previousOverflow = document.body.style.overflow;
+    const returnFocus = contactButtonRef.current;
     document.body.style.overflow = "hidden";
     panelRef.current?.focus();
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setContactOpen(false);
+    const handleDialogKeys = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setContactOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleDialogKeys);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-      contactButtonRef.current?.focus();
+      window.removeEventListener("keydown", handleDialogKeys);
+      returnFocus?.focus();
     };
   }, [contactOpen]);
 
@@ -139,24 +156,32 @@ export function MobileNav() {
               {whatsapp ? (
                 <a href={whatsapp} target="_blank" rel="noreferrer" className="whatsapp">
                   <MessageCircle />
-                  <b>WhatsApp<small>Réponse rapide</small></b>
+                  <b>
+                    WhatsApp<small>Réponse rapide</small>
+                  </b>
                 </a>
               ) : null}
               {email ? (
                 <a href={email}>
                   <Mail />
-                  <b>E-mail<small>Décrire mon besoin</small></b>
+                  <b>
+                    E-mail<small>Décrire mon besoin</small>
+                  </b>
                 </a>
               ) : null}
               {phone ? (
                 <a href={phone}>
                   <Phone />
-                  <b>Téléphone<small>Appel direct</small></b>
+                  <b>
+                    Téléphone<small>Appel direct</small>
+                  </b>
                 </a>
               ) : null}
               <button type="button" onClick={openVCard}>
                 <UserPlus />
-                <b>Enregistrer<small>Ajouter la vCard</small></b>
+                <b>
+                  Enregistrer<small>Ajouter la vCard</small>
+                </b>
               </button>
             </div>
 
