@@ -161,7 +161,7 @@ function Dashboard() {
               </small>
             </b>
           </p>
-          <img src="/assets/drsmoke.jpg" alt="DrSmoke" />
+          <img src="/assets/drsmoke-320.webp" alt="" width={320} height={320} loading="lazy" />
           <b>Conseil DrSmoke</b>
           <span>Un système propre et à jour, c'est 80 % des problèmes évités.</span>
           <a href="#notes">
@@ -174,7 +174,11 @@ function Dashboard() {
           <Logo />
           <nav>
             {["Accueil", "Assistance", "Projets", "Notes", "Contact"].map((x, i) => (
-              <a className={i ? "" : "on"} href={i ? "#" + x.toLowerCase() : "#top"} key={x}>
+              <a
+                className={i ? "" : "on"}
+                href={["#top", "#assistance", "#projects", "#notes", "#contact"][i]}
+                key={x}
+              >
                 {x}
               </a>
             ))}
@@ -183,14 +187,32 @@ function Dashboard() {
             <i />
             Disponible<small>Réponse rapide garantie</small>
           </p>
-          <Search />
-          <Bell />
-          <User />
+          <a className="top-icon" href="#projects" aria-label="Voir les projets">
+            <Search />
+          </a>
+          <a className="top-icon" href="#notes" aria-label="Voir les notes récentes">
+            <Bell />
+          </a>
+          <button
+            className="top-icon"
+            onClick={openVCard}
+            aria-label="Enregistrer Adonaï dans mes contacts"
+          >
+            <User />
+          </button>
         </header>
         <main id="main">
           <section className="hero">
             <div className="identity">
-              <img src="/assets/adonai.png" alt="Portrait d'Adonaï MOUZITA" />
+              <img
+                src="/assets/adonai-960.webp"
+                srcSet="/assets/adonai-640.webp 640w, /assets/adonai-960.webp 960w, /assets/adonai-1400.webp 1400w"
+                sizes="(max-width: 759px) 100vw, (max-width: 1100px) 554px, 46vw"
+                width={1400}
+                height={1120}
+                fetchPriority="high"
+                alt="Portrait d'Adonaï MOUZITA"
+              />
               <div>
                 <span>Bonjour, je suis</span>
                 <h1>Adonaï.</h1>
@@ -338,7 +360,7 @@ function Dashboard() {
             Assistance • Logiciels • Sécurité • Optimisation
             <br />© 2026 DMAMPRO. Tous droits réservés.
           </span>
-          <a href="#top">Mentions légales</a>
+          <span>Mentions légales</span>
         </footer>
       </div>
       <aside className="right">
@@ -510,7 +532,7 @@ function Tip() {
     <article className="module tip">
       <h2>Conseil du jour</h2>
       <div>
-        <img src="/assets/drsmoke.jpg" alt="DrSmoke" />
+        <img src="/assets/drsmoke-320.webp" alt="" width={320} height={320} loading="lazy" />
         <p>
           Prenez 10 minutes chaque semaine pour mettre à jour vos logiciels.
           <br />
@@ -526,9 +548,7 @@ function Notes() {
     <section className="module notes" id="notes">
       <header>
         <h2>Notes du terrain</h2>
-        <a href="#notes">
-          Voir toutes <ArrowRight />
-        </a>
+        <span className="notes-count">4 notes</span>
       </header>
       {notes.map(([t, d, time]) => (
         <article key={t}>
@@ -538,7 +558,6 @@ function Notes() {
             <small>{d}</small>
           </p>
           <time>{time}</time>
-          <ChevronRight />
         </article>
       ))}
     </section>
@@ -571,14 +590,14 @@ function Contact() {
           <b>Suivez-moi</b>
           <small>Restez connecté</small>
         </p>
-        <a href="#contact" aria-label="LinkedIn — contact à renseigner">
+        <a href={VCARD_DATA.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">
           <Link />
         </a>
-        <a href={VCARD_DATA.github} aria-label="GitHub">
+        <a href={VCARD_DATA.github} target="_blank" rel="noreferrer" aria-label="GitHub">
           <GitFork />
         </a>
-        <a href="#contact" aria-label="YouTube — contact à renseigner">
-          <Video />
+        <a href={mailtoLink() ?? "#contact"} aria-label="Envoyer un e-mail">
+          <Mail />
         </a>
       </section>
     </div>

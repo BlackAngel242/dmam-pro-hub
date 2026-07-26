@@ -120,11 +120,11 @@ button {
   display: block;
   color: #718b9b;
 }
-.top > svg {
+.top-icon {
   width: 20px;
   color: #a9bdc8;
 }
-.top > svg:last-child {
+.top-icon:last-child {
   padding: 5px;
   width: 28px;
   height: 28px;
@@ -482,7 +482,7 @@ button {
   text-align: right;
   align-self: center;
   color: #7893a3;
-  font-size: 9px;
+  font-size: 10px;
 }
 .projects article > small b {
   display: block;
@@ -551,10 +551,10 @@ button {
 .notes article small {
   display: block;
   color: #7690a1;
-  font-size: 8px;
+  font-size: 10px;
 }
 .notes time {
-  font-size: 8px;
+  font-size: 10px;
   color: #7892a2;
   text-align: right;
 }
@@ -724,7 +724,7 @@ button {
     height: 285px;
     background:
       linear-gradient(90deg, #031522f2, #031522aa 45%, transparent 70%),
-      url("/assets/adonai.png") 65% 44% / cover;
+      url("/assets/adonai-960.webp") 65% 44% / cover;
   }
   .cover > div {
     padding: 65px 0 0 34px;
@@ -927,7 +927,7 @@ button {
   .right article em {
     display: block;
     color: #8fa5b3;
-    font-size: 8px;
+    font-size: 10px;
     font-style: normal;
   }
   .outline {
@@ -969,7 +969,7 @@ button {
   }
   .top nav,
   .top > p,
-  .top > svg:last-child,
+  .top-icon:last-child,
   .logo span {
     display: none;
   }
@@ -1021,5 +1021,79 @@ button {
   .contact > p,
   .contact > section {
     grid-column: 1/-1;
+  }
+}
+
+.top-icon {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.top-icon svg {
+  width: 20px;
+}
+.notes-count {
+  color: var(--blue);
+}
+@media (pointer: coarse) {
+  .left nav a,
+  .outline,
+  .module header a,
+  .notes-count,
+  .contact section > a {
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 1100px) {
+  .left nav a,
+  .outline {
+    height: 44px;
+  }
+  .module header a,
+  .notes-count {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+@media (max-width: 759px) {
+  .top {
+    grid-template-columns: 1fr 44px 44px;
+  }
+  .top-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .featured section > a {
+    min-height: 44px;
+  }
+  .module header a,
+  .notes-count {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .contact section > a {
+    width: 44px;
+    height: 44px;
+  }
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

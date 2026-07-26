@@ -65,3 +65,13 @@
 **Erreur :** déclarer une fidélité « au pixel près » sans comparaison perceptuelle disponible.
 
 **Règle :** distinguer géométrie mesurée, comparaison visuelle et diff pixel. Ne promettre que le niveau effectivement vérifié.
+
+## 8. Tester après hydratation React
+
+**Symptôme :** les clics Playwright ne modifiaient pas l'état et la vCard semblait inactive.
+
+**Cause :** le test agissait après domcontentloaded, avant la fin de l'hydratation client.
+
+**Solution validée :** attendre explicitement l'hydratation, puis vérifier ria-pressed et instrumenter l'ancre Blob créée par openVCard.
+
+**Prévention :** distinguer HTML SSR disponible et interactions React prêtes ; chaque test interactif doit attendre un signal client déterministe.
