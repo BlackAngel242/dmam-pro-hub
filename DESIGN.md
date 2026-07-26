@@ -13,6 +13,11 @@ colors:
   warning: "#B56A00"
   danger: "#C43B3B"
 typography:
+  dashboard:
+    fontFamily: "Roboto Condensed, Arial Narrow, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.45
   headline:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "2.25rem"
@@ -51,7 +56,12 @@ components:
   button-primary:
     backgroundColor: "{colors.signal-orange}"
     textColor: "{colors.surface}"
-    typography: "{typography.label}"
+    typography:
+  dashboard:
+    fontFamily: "Roboto Condensed, Arial Narrow, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.45 "{typography.label}"
     rounded: "{rounded.md}"
     padding: "12px 18px"
   button-primary-hover:
@@ -60,7 +70,12 @@ components:
   button-secondary:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.graphite}"
-    typography: "{typography.label}"
+    typography:
+  dashboard:
+    fontFamily: "Roboto Condensed, Arial Narrow, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.45 "{typography.label}"
     rounded: "{rounded.md}"
     padding: "12px 18px"
   panel:
