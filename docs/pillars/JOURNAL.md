@@ -53,3 +53,7 @@ Cached verified project imagery locally: DrShop OG, EngageTrack 512 icon, and Bi
 ### Rotation cap
 
 Autoplay now stops after three complete loops (six transitions for two pages, about 90 seconds). Manual controls remain available after autoplay stops.
+
+## 2026-07-26 — Field Notes reader and contextual support
+
+Made all four field notes readable in an accessible in-page dialog with restrained rectangular halo, blur, complete original articles, previous/next navigation, Escape, focus trap/return, and contextual handoff to the guided diagnostic. Mission cards now open the diagnostic directly with the selected intent prefilled. Persistent inbox intentionally remains planned until Supabase, Turnstile and Resend secrets are connected. Evidence: 18 passed, 2 viewport-conditional skips, 0 failed; Axe modal scan has no serious/critical violation.

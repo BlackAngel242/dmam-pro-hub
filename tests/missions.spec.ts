@@ -10,6 +10,8 @@ test("chaque mission peut être sélectionnée et expose son état", async ({ pa
     await button.click();
     await expect(button).toHaveAttribute("aria-pressed", "true");
     await expect(button).toHaveClass(/sel/);
+    await expect(page.getByRole("dialog", { name: /Diagnostic guidé/i })).toBeVisible();
+    await page.keyboard.press("Escape");
   }
 });
 

@@ -37,6 +37,8 @@ import { visibleProjects, safeProjectWebsiteUrl } from "@/lib/projects";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { HubCommandPalette } from "@/components/HubCommandPalette";
 import { NeedAssistant } from "@/components/NeedAssistant";
+import { FieldNoteReader } from "@/components/FieldNoteReader";
+import { FIELD_NOTES } from "@/lib/field-notes";
 const SITE_URL = "https://dmam-pro-hub.netlify.app";
 const SEO_TITLE = "DMAMPRO — Assistance informatique, projets et conseils";
 const SEO_DESCRIPTION =
@@ -125,28 +127,12 @@ const missions = [
     message: "Bonjour Adonaï, je souhaite optimiser les performances de mon appareil.",
   },
 ] as const;
-const notes = [
-  [
-    "Checklist rapide avant intervention",
-    "Vérifications essentielles avant toute prise en main à distance.",
-    "Avant d’appeler",
-  ],
-  [
-    "Pourquoi garder ses logiciels à jour ?",
-    "Mises à jour, sécurité et stabilité : les bonnes pratiques.",
-    "Maintenance",
-  ],
-  [
-    "Nettoyage système : les bons réflexes",
-    "Libérer de l’espace et maintenir les performances.",
-    "Optimisation",
-  ],
-  [
-    "Sauvegardes : ne pas attendre la panne",
-    "Méthodes simples pour sauvegarder efficacement.",
-    "Prévention",
-  ],
-] as const;
+const missionIntent = {
+  help: "problem",
+  install: "install",
+  secure: "infection",
+  optimise: "performance",
+} as const;
 const activity = [
   [Folder, "DrShop", "Boutique digitale mobile-first", "Projet public"],
   [Folder, "EngageTrack", "Registre public congolais", "Projet public"],
@@ -397,12 +383,12 @@ function Dashboard() {
             <Projects projects={projects} />
             <div className="rightstack">
               <Tip />
-              <Notes />
+              <Notes onRequestHelp={() => setAssistantOpen(true)} />
             </div>
           </section>
           <section className="midcontent">
             <Projects projects={projects} />
-            <Notes />
+            <Notes onRequestHelp={() => setAssistantOpen(true)} />
             <Contact />
           </section>
         </main>
@@ -470,7 +456,11 @@ function Dashboard() {
             aria-label="Diagnostic guidé"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <NeedAssistant onClose={() => setAssistantOpen(false)} />
+            <NeedAssistant
+              key={selected.id}
+              initialIntent={missionIntent[selected.id]}
+              onClose={() => setAssistantOpen(false)}
+            />
           </div>
         </div>
       ) : null}
@@ -505,7 +495,10 @@ function Mission({
         <button
           className={selected.id === m.id ? "sel" : ""}
           aria-pressed={selected.id === m.id}
-          onClick={() => setSelected(m)}
+          onClick={() => {
+            setSelected(m);
+            onOpenAssistant();
+          }}
           key={m.id}
         >
           <i>
@@ -724,23 +717,57 @@ function Tip() {
     </article>
   );
 }
-function Notes() {
+function Notes({ onRequestHelp }: { onRequestHelp: () => void }) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const selectedNote = selectedIndex === null ? null : FIELD_NOTES[selectedIndex];
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const openNote = (index: number, trigger: HTMLButtonElement) => {
+    closeButtonRef.current = trigger;
+    setSelectedIndex(index);
+  };
+  const closeNote = () => {
+    setSelectedIndex(null);
+    window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+  };
+  const move = (direction: number) => {
+    setSelectedIndex((current) =>
+      current === null ? 0 : (current + direction + FIELD_NOTES.length) % FIELD_NOTES.length,
+    );
+  };
+
   return (
     <section className="module notes" id="notes">
       <header>
         <h2>Notes du terrain</h2>
-        <span className="notes-count">4 notes</span>
+        <span className="notes-count">{FIELD_NOTES.length} notes</span>
       </header>
-      {notes.map(([t, d, time]) => (
-        <article key={t}>
-          <NotebookText />
-          <p>
-            <b>{t}</b>
-            <small>{d}</small>
-          </p>
-          <time>{time}</time>
+      {FIELD_NOTES.map((note, index) => (
+        <article key={note.slug}>
+          <button type="button" onClick={(event) => openNote(index, event.currentTarget)}>
+            <NotebookText aria-hidden="true" />
+            <span>
+              <b>{note.title}</b>
+              <small>{note.excerpt}</small>
+            </span>
+            <time>{note.category}</time>
+          </button>
         </article>
       ))}
+      {selectedNote && selectedIndex !== null ? (
+        <FieldNoteReader
+          note={selectedNote}
+          position={selectedIndex}
+          total={FIELD_NOTES.length}
+          onClose={closeNote}
+          onPrevious={() => move(-1)}
+          onNext={() => move(1)}
+          onRequestHelp={() => {
+            setSelectedIndex(null);
+            onRequestHelp();
+          }}
+        />
+      ) : null}
     </section>
   );
 }

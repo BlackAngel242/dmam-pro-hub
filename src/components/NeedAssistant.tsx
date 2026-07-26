@@ -13,18 +13,22 @@ import {
 
 type NeedAssistantProps = {
   onClose?: () => void;
+  initialIntent?: NeedIntent;
   className?: string;
 };
 
 const EMPTY_ANSWERS: NeedAnswers = { intent: "", device: "", details: "" };
 const DETAILS_LIMIT = 500;
 
-export function NeedAssistant({ onClose, className = "" }: NeedAssistantProps) {
+export function NeedAssistant({ onClose, initialIntent, className = "" }: NeedAssistantProps) {
   const titleId = useId();
   const rootRef = useRef<HTMLElement>(null);
   const progressId = useId();
-  const [step, setStep] = useState(1);
-  const [answers, setAnswers] = useState<NeedAnswers>(EMPTY_ANSWERS);
+  const [step, setStep] = useState(initialIntent ? 2 : 1);
+  const [answers, setAnswers] = useState<NeedAnswers>({
+    ...EMPTY_ANSWERS,
+    intent: initialIntent ?? "",
+  });
   const [summary, setSummary] = useState("");
   const [status, setStatus] = useState("");
   const isSummary = step === 4;
@@ -75,10 +79,10 @@ export function NeedAssistant({ onClose, className = "" }: NeedAssistantProps) {
   };
 
   const restart = () => {
-    setAnswers(EMPTY_ANSWERS);
+    setAnswers({ ...EMPTY_ANSWERS, intent: initialIntent ?? "" });
     setSummary("");
     setStatus("Diagnostic recommencé.");
-    setStep(1);
+    setStep(initialIntent ? 2 : 1);
   };
 
   const copySummary = async () => {
