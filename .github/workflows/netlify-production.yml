@@ -34,7 +34,6 @@ jobs:
         run: bun run typecheck
 
       - name: Build and deploy to Netlify
-        run: bunx netlify-cli@latest deploy --build --prod --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
+        run: bunx netlify-cli@latest deploy --build --prod --site "79de207d-4891-4ed6-ba62-f13e404dc36f" --auth "$NETLIFY_AUTH_TOKEN"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
