@@ -49,3 +49,7 @@ Added a real command palette, privacy-first guided need assistant, responsive di
 ## 2026-07-26 — Project gallery
 
 Cached verified project imagery locally: DrShop OG, EngageTrack 512 icon, and BisoMapTech public icon fallback because its declared /og-image.png returns 404. The featured project is excluded from the rotating project deck. Deck rotates every 15 seconds, pauses on hover/focus, supports manual navigation, and respects reduced motion.
+
+### Rotation cap
+
+Autoplay now stops after three complete loops (six transitions for two pages, about 90 seconds). Manual controls remain available after autoplay stops.

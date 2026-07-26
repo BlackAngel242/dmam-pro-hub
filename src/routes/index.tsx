@@ -578,15 +578,31 @@ function Projects({ projects }: { projects: ReturnType<typeof visibleProjects> }
   const pageCount = Math.max(1, Math.ceil(projectList.length / pageSize));
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [autoplayDone, setAutoplayDone] = useState(false);
+  const completedLoopsRef = useRef(0);
   const listRef = useRef<HTMLDivElement>(null);
   const visible = projectList.slice(page * pageSize, page * pageSize + pageSize);
 
   useEffect(() => {
-    if (pageCount < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    if (
+      pageCount < 2 ||
+      paused ||
+      autoplayDone ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
       return;
-    const timer = window.setInterval(() => setPage((current) => (current + 1) % pageCount), 15_000);
+    const timer = window.setInterval(() => {
+      setPage((current) => {
+        const next = (current + 1) % pageCount;
+        if (next === 0) {
+          completedLoopsRef.current += 1;
+          if (completedLoopsRef.current >= 3) setAutoplayDone(true);
+        }
+        return next;
+      });
+    }, 15_000);
     return () => window.clearInterval(timer);
-  }, [pageCount, paused]);
+  }, [autoplayDone, pageCount, paused]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -672,7 +688,13 @@ function Projects({ projects }: { projects: ReturnType<typeof visibleProjects> }
           </button>
           <span aria-live="polite">
             {page + 1} / {pageCount}
-            <small>{paused ? "Lecture en pause" : "Rotation toutes les 15 s"}</small>
+            <small>
+              {autoplayDone
+                ? "3 boucles terminées"
+                : paused
+                  ? "Lecture en pause"
+                  : "Rotation toutes les 15 s · 3 boucles max"}
+            </small>
           </span>
           <button type="button" onClick={() => goTo(page + 1)} aria-label="Projets suivants">
             ›
