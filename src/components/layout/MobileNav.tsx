@@ -13,8 +13,8 @@ import {
 import { useAutoHideNav } from "@/hooks/useAutoHideNav";
 import { mailtoLink, openVCard, telLink, whatsappLink } from "@/lib/vcard";
 
-const sections = ["assistance", "projects", "notes", "contact"] as const;
-const BOTTOM_EDGE = 96;
+const sections = ["assistance", "projects", "notes"] as const;
+const BOTTOM_EDGE = 1;
 
 export function MobileNav() {
   const [active, setActive] = useState("top");
@@ -24,36 +24,34 @@ export function MobileNav() {
   const { hidden, reveal } = useAutoHideNav(!contactOpen);
 
   useEffect(() => {
-    const updateEdge = () => {
-      const atBottom =
-        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - BOTTOM_EDGE;
-      if (window.scrollY < 180) setActive("top");
-      else if (atBottom) setActive("contact");
+    const updateActive = () => {
+      const y = window.scrollY;
+      const atBottom = y + window.innerHeight >= document.documentElement.scrollHeight - BOTTOM_EDGE;
+      if (y < 180) {
+        setActive("top");
+        return;
+      }
+      if (atBottom) {
+        setActive(window.location.hash === "#notes" ? "notes" : "contact");
+        return;
+      }
+
+      const probe = y + window.innerHeight * 0.82;
+      const current = sections.reduce<string>((candidate, id) => {
+        const element = document.getElementById(id);
+        return element && element.offsetTop <= probe ? id : candidate;
+      }, "assistance");
+      setActive(current);
     };
-    updateEdge();
-    window.addEventListener("scroll", updateEdge, { passive: true });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActive(visible.target.id);
-      },
-      { rootMargin: "-18% 0px -62% 0px", threshold: [0.05, 0.25, 0.5] },
-    );
-
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
+    updateActive();
+    window.addEventListener("scroll", updateActive, { passive: true });
+    window.addEventListener("hashchange", updateActive);
     return () => {
-      window.removeEventListener("scroll", updateEdge);
-      observer.disconnect();
+      window.removeEventListener("scroll", updateActive);
+      window.removeEventListener("hashchange", updateActive);
     };
   }, []);
-
   useEffect(() => {
     if (!contactOpen) return;
     const previousOverflow = document.body.style.overflow;

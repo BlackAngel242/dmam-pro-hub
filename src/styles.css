@@ -1288,6 +1288,10 @@ button {
   }
 }
 
+img {
+  max-width: 100%;
+}
+
 @media (max-width: 340px) {
   .featured > div {
     grid-template-columns: minmax(0, 1fr);
