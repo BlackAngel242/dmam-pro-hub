@@ -26,7 +26,8 @@ export function MobileNav() {
   useEffect(() => {
     const updateActive = () => {
       const y = window.scrollY;
-      const atBottom = y + window.innerHeight >= document.documentElement.scrollHeight - BOTTOM_EDGE;
+      const atBottom =
+        y + window.innerHeight >= document.documentElement.scrollHeight - BOTTOM_EDGE;
       if (y < 180) {
         setActive("top");
         return;
@@ -187,7 +188,10 @@ export function MobileNav() {
               </button>
             </div>
 
-            <p>Le hub ne contient pas de formulaire et ne stocke pas votre message. Celui-ci est envoyé par l’application choisie.</p>
+            <p>
+              Le hub ne contient pas de formulaire et ne stocke pas votre message. Celui-ci est
+              envoyé par l’application choisie.
+            </p>
           </section>
         </div>
       ) : null}

@@ -41,3 +41,7 @@ Chronologie factuelle des travaux. Chaque entrée note le contexte, l'action, le
 - H1 rendu unique ; activités et dates fictives remplacées par des mises à jour publiques vérifiables.
 - Promesses absolues remplacées par des formulations de méthode et de disponibilité raisonnables.
 - Préversion P0 compilée : https://6a65f701b8282f190a619bbc--dmam-pro-hub.netlify.app.
+
+## 2026-07-26 — Hub interaction layer
+
+Added a real command palette, privacy-first guided need assistant, responsive dialogs, WCAG contrast correction, and Playwright/Axe acceptance gate. Final local evidence: 40 passed, 8 conditional skips, 0 failed.

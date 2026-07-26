@@ -2,8 +2,6 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Bell,
-  BookOpen,
   BriefcaseBusiness,
   CalendarDays,
   Check,
@@ -26,7 +24,6 @@ import {
   NotebookText,
   Phone,
   Search,
-  Settings,
   ShieldCheck,
   Sparkles,
   User,
@@ -38,6 +35,8 @@ import {
 import { openVCard, whatsappLink, mailtoLink, telLink, VCARD_DATA } from "@/lib/vcard";
 import { visibleProjects, safeProjectWebsiteUrl } from "@/lib/projects";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { HubCommandPalette } from "@/components/HubCommandPalette";
+import { NeedAssistant } from "@/components/NeedAssistant";
 const SITE_URL = "https://dmam-pro-hub.netlify.app";
 const SEO_TITLE = "DMAMPRO — Assistance informatique, projets et conseils";
 const SEO_DESCRIPTION =
@@ -159,8 +158,6 @@ const nav = [
   [Folder, "Projets", "#projects"],
   [NotebookText, "Notes", "#notes"],
   [User, "Contacts", "#contact"],
-  [BookOpen, "Ressources", "#notes"],
-  [Settings, "Réglages", "#contact"],
 ] as const;
 function Logo({ small = false }: { small?: boolean }) {
   return (
@@ -173,6 +170,8 @@ function Logo({ small = false }: { small?: boolean }) {
 }
 function Dashboard() {
   const [selected, setSelected] = useState<(typeof missions)[number]>(missions[0]);
+  const [commandOpen, setCommandOpen] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const wa = whatsappLink(selected.message);
   const projects = visibleProjects().slice(0, 3);
   return (
@@ -231,11 +230,16 @@ function Dashboard() {
             <i />
             Disponible<small>Réponse selon disponibilité</small>
           </p>
-          <a className="top-icon" href="#projects" aria-label="Voir les projets">
+          <button
+            className="top-icon"
+            type="button"
+            onClick={() => setCommandOpen(true)}
+            aria-label="Rechercher dans le hub"
+          >
             <Search />
-          </a>
+          </button>
           <a className="top-icon" href="#notes" aria-label="Voir les notes récentes">
-            <Bell />
+            <NotebookText />
           </a>
           <button
             className="top-icon"
@@ -281,7 +285,12 @@ function Dashboard() {
                 </ul>
               </div>
             </div>
-            <Mission selected={selected} setSelected={setSelected} wa={wa} />
+            <Mission
+              selected={selected}
+              setSelected={setSelected}
+              wa={wa}
+              onOpenAssistant={() => setAssistantOpen(true)}
+            />
           </section>
           <section className="mid">
             <div className="cover">
@@ -317,9 +326,9 @@ function Dashboard() {
                 trouvons la meilleure solution ensemble.
               </p>
               <div>
-                <a href={wa ?? "#contact"}>
-                  Expliquer mon besoin <ArrowRight />
-                </a>
+                <button type="button" onClick={() => setAssistantOpen(true)}>
+                  Préparer mon besoin <ArrowRight />
+                </button>
                 <button onClick={openVCard}>
                   <UserPlus />
                   Ajouter aux contacts
@@ -344,7 +353,10 @@ function Dashboard() {
               <ShieldCheck />
               <b>
                 Vous gardez le contrôle
-                <small>Les modalités d’accès et de confidentialité sont précisées avant chaque intervention.</small>
+                <small>
+                  Les modalités d’accès et de confidentialité sont précisées avant chaque
+                  intervention.
+                </small>
               </b>
             </div>
           </section>
@@ -448,6 +460,25 @@ function Dashboard() {
         </div>
       </aside>
       <MobileNav />
+      {assistantOpen ? (
+        <div className="assistant-backdrop" onMouseDown={() => setAssistantOpen(false)}>
+          <div
+            className="assistant-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Diagnostic guidé"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <NeedAssistant onClose={() => setAssistantOpen(false)} />
+          </div>
+        </div>
+      ) : null}
+      <HubCommandPalette
+        open={commandOpen}
+        onClose={() => setCommandOpen(false)}
+        onRequestOpen={() => setCommandOpen(true)}
+        onOpenAssistant={() => setAssistantOpen(true)}
+      />
     </div>
   );
 }
@@ -455,15 +486,20 @@ function Mission({
   selected,
   setSelected,
   wa,
+  onOpenAssistant,
 }: {
   selected: (typeof missions)[number];
   setSelected: (m: (typeof missions)[number]) => void;
   wa: string | null;
+  onOpenAssistant: () => void;
 }) {
   return (
     <div className="mission" id="assistance">
       <h2>Par quoi voulez-vous commencer ?</h2>
-      <p>Choisissez la situation la plus proche de la vôtre. Vous pourrez préciser les détails ensuite.</p>
+      <p>
+        Choisissez la situation la plus proche de la vôtre. Vous pourrez préciser les détails
+        ensuite.
+      </p>
       {missions.map((m) => (
         <button
           className={selected.id === m.id ? "sel" : ""}
@@ -482,10 +518,10 @@ function Mission({
         </button>
       ))}
       <div className="actions">
-        <a href={wa ?? "#contact"}>
+        <button type="button" onClick={onOpenAssistant}>
           <Menu />
-          Expliquer mon besoin
-        </a>
+          Préparer mon besoin
+        </button>
         <button onClick={openVCard}>
           <UserPlus />
           Ajouter aux contacts

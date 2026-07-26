@@ -93,3 +93,7 @@
 **Solution validée :** transporter les dictionnaires Unicode sous forme de JSON ASCII avec échappements `\uXXXX`, puis décoder le JSON dans Python avant les remplacements ciblés.
 
 **Prévention :** après toute écriture multilingue, rechercher les motifs lettre–`?`–lettre, exécuter `git diff --check` et inspecter le diff avant compilation. Ne jamais effectuer une correction globale de mojibake sans audit UTF-8 strict.
+
+## Playwright server ports on Windows
+
+Repeated webServer timeouts were caused by orphaned Vite preview processes occupying 4173-4180. Use a dedicated strict port (4190), production preview, two workers locally, and disable local video to avoid false timeouts. Always rebuild dist before validating CSS changes against preview.
