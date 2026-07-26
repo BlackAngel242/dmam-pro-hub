@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dmam-pro-hub.netlify.app/sitemap.xml

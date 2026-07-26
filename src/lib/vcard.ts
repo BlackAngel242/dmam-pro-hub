@@ -25,7 +25,7 @@ export const VCARD_DATA: ContactData = {
   organization: "DMAMPRO",
   title: "Informaticien spécialisé en support IT",
   // Aucun domaine public DMAMPRO n'est confirmé.
-  siteUrl: "",
+  siteUrl: "https://dmam-pro-hub.netlify.app",
   phone: "+242066507275",
   whatsapp: "+242066507275",
   email: "dmampro@gmail.com",

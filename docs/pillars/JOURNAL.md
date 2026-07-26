@@ -30,3 +30,14 @@ Chronologie factuelle des travaux. Chaque entrée note le contexte, l'action, le
 - Adaptation DMAMPRO : Accueil, Assistance, Projets, Notes et Contact, avec section active détectée automatiquement.
 - Améliorations : barre toujours visible aux extrémités, panneau Contact réel, verrouillage du défilement, piège de focus et fermeture par Échap.
 - Préversion Netlify compilée : https://6a65eab67cac9a4b1350596b--dmam-pro-hub.netlify.app.
+
+## P0 acquisition, confiance et identité sociale
+
+- Conseil spécialisé SEO, copywriting, storytelling et identité sociale constitué et audité.
+- Correctif mobile final publié sur GitHub (`58c9fa2`).
+- Carte Open Graph DMAMPRO produite en 1200 × 630, JPEG 94 Ko, avec portrait réel et composition sans esthétique cyberpunk.
+- Pack favicon régénéré et validé : SVG, ICO multi-tailles 16/32/48, Apple 180, Android 192/512 et maskable.
+- Ajout local du canonical Netlify, OG/Twitter, JSON-LD WebSite + Person, robots.txt, sitemap.xml et webmanifest.
+- H1 rendu unique ; activités et dates fictives remplacées par des mises à jour publiques vérifiables.
+- Promesses absolues remplacées par des formulations de méthode et de disponibilité raisonnables.
+- Préversion P0 compilée : https://6a65f701b8282f190a619bbc--dmam-pro-hub.netlify.app.

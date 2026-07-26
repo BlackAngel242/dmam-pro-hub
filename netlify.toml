@@ -9,3 +9,8 @@
 [dev]
   command = "bun run dev"
   port = 3000
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"

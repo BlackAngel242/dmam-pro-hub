@@ -38,14 +38,59 @@ import {
 import { openVCard, whatsappLink, mailtoLink, telLink, VCARD_DATA } from "@/lib/vcard";
 import { visibleProjects, safeProjectWebsiteUrl } from "@/lib/projects";
 import { MobileNav } from "@/components/layout/MobileNav";
+const SITE_URL = "https://dmam-pro-hub.netlify.app";
+const SEO_TITLE = "DMAMPRO — Assistance informatique, projets et conseils";
+const SEO_DESCRIPTION =
+  "Adonaï MOUZITA vous aide à diagnostiquer, sécuriser, installer et améliorer vos outils numériques, avec une prochaine étape claire.";
+const OG_IMAGE = SITE_URL + "/og/dmampro-social-v1.jpg";
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": SITE_URL + "/#website",
+      url: SITE_URL + "/",
+      name: "DMAMPRO",
+      inLanguage: "fr",
+    },
+    {
+      "@type": "Person",
+      "@id": SITE_URL + "/#person",
+      name: "Adonaï MOUZITA",
+      url: SITE_URL + "/",
+      sameAs: ["https://github.com/BlackAngel242"],
+    },
+  ],
+};
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Adonaï MOUZITA — DMAMPRO · L'Atelier Réseau" },
+      { title: SEO_TITLE },
+      { name: "description", content: SEO_DESCRIPTION },
+      { name: "robots", content: "index,follow,max-image-preview:large" },
+      { property: "og:title", content: SEO_TITLE },
+      { property: "og:description", content: SEO_DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL + "/" },
+      { property: "og:site_name", content: "DMAMPRO" },
+      { property: "og:locale", content: "fr_FR" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Adonaï MOUZITA dans l’atelier numérique DMAMPRO." },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SEO_TITLE },
+      { name: "twitter:description", content: SEO_DESCRIPTION },
+      { name: "twitter:image", content: OG_IMAGE },
+      { name: "twitter:image:alt", content: "Adonaï MOUZITA dans l’atelier numérique DMAMPRO." },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/" }],
+    scripts: [
       {
-        name: "description",
-        content:
-          "Hub personnel de support IT, projets, conseils et solutions numériques d'Adonaï MOUZITA.",
+        type: "application/ld+json",
+        children: JSON.stringify(STRUCTURED_DATA),
       },
     ],
   }),
@@ -55,8 +100,8 @@ const missions = [
   {
     id: "help",
     icon: CircleHelp,
-    title: "Obtenir de l'aide",
-    detail: "Décrivez votre problème et je vous accompagne pas à pas.",
+    title: "Résoudre un problème",
+    detail: "Décrivez ce qui bloque et commençons par le clarifier.",
     message: "Bonjour Adonaï, j'ai besoin d'aide avec un problème informatique.",
   },
   {
@@ -69,15 +114,15 @@ const missions = [
   {
     id: "secure",
     icon: ShieldCheck,
-    title: "Désinfecter et sécuriser",
-    detail: "Suppression des menaces et protection de votre système.",
+    title: "Vérifier une infection",
+    detail: "Identifiez les symptômes avant toute action sur votre appareil.",
     message: "Bonjour Adonaï, je souhaite désinfecter et sécuriser mon appareil.",
   },
   {
     id: "optimise",
     icon: Gauge,
-    title: "Optimiser mon système",
-    detail: "Amélioration des performances et nettoyage complet.",
+    title: "Comprendre un ralentissement",
+    detail: "Repérez ce qui ralentit l’appareil avant de le remplacer.",
     message: "Bonjour Adonaï, je souhaite optimiser les performances de mon appareil.",
   },
 ] as const;
@@ -85,30 +130,28 @@ const notes = [
   [
     "Checklist rapide avant intervention",
     "Vérifications essentielles avant toute prise en main à distance.",
-    "Aujourd'hui",
+    "Avant d’appeler",
   ],
   [
     "Pourquoi garder ses logiciels à jour ?",
     "Mises à jour, sécurité et stabilité : les bonnes pratiques.",
-    "Hier",
+    "Maintenance",
   ],
   [
     "Nettoyage système : les bons réflexes",
-    "Libérer de l'espace et maintenir les performances.",
-    "3 jours",
+    "Libérer de l’espace et maintenir les performances.",
+    "Optimisation",
   ],
   [
     "Sauvegardes : ne pas attendre la panne",
     "Méthodes simples pour sauvegarder efficacement.",
-    "5 jours",
+    "Prévention",
   ],
 ] as const;
 const activity = [
-  [Check, "Intervention terminée", "Optimisation système", "2 heures"],
-  [MessageCircle, "Nouveau message", "Demande d'assistance", "5 heures"],
-  [MonitorCog, "Logiciel installé", "Suite bureautique", "Hier"],
-  [ShieldCheck, "Système désinfecté", "Menaces supprimées", "Hier"],
-  [Folder, "Projet mis à jour", "DrShop — Solutions numériques", "Hier"],
+  [Folder, "DrShop", "Boutique digitale mobile-first", "Projet public"],
+  [Folder, "EngageTrack", "Registre public congolais", "Projet public"],
+  [GitFork, "BisoMapTech", "Contribution à la communauté tech", "Contribution"],
 ] as const;
 const nav = [
   [Home, "Accueil", "#top"],
@@ -186,7 +229,7 @@ function Dashboard() {
           </nav>
           <p>
             <i />
-            Disponible<small>Réponse rapide garantie</small>
+            Disponible<small>Réponse selon disponibilité</small>
           </p>
           <a className="top-icon" href="#projects" aria-label="Voir les projets">
             <Search />
@@ -217,7 +260,7 @@ function Dashboard() {
               <div>
                 <span>Bonjour, je suis</span>
                 <h1>Adonaï.</h1>
-                <strong>Votre conseiller informatique dédié.</strong>
+                <strong>Je vous aide à reprendre la main sur vos outils numériques.</strong>
                 <p>
                   Je vous accompagne à distance pour résoudre vos problèmes, installer vos
                   logiciels, désinfecter votre système, optimiser vos performances et vous apporter
@@ -225,10 +268,10 @@ function Dashboard() {
                 </p>
                 <ul>
                   {[
-                    "Assistance à distance sécurisée",
-                    "Intervention rapide et efficace",
-                    "Solutions claires et personnalisées",
-                    "Confidentialité et fiabilité assurées",
+                    "Votre besoin reformulé avant toute intervention",
+                    "Étapes expliquées en langage clair",
+                    "Validation avec vous avant de terminer",
+                    "Conseils laissés pour éviter que le problème revienne",
                   ].map((x) => (
                     <li key={x}>
                       <Check />
@@ -243,8 +286,8 @@ function Dashboard() {
           <section className="mid">
             <div className="cover">
               <div>
-                <h1>Bonjour, je suis Adonaï.</h1>
-                <p>Bienvenue dans votre hub personnel.</p>
+                <p className="cover-title">Bonjour, je suis Adonaï.</p>
+                <p>Je vous aide à reprendre la main sur vos outils numériques.</p>
                 <span>
                   Ici, vous pouvez obtenir de l'aide, suivre vos projets et accéder à mes services
                   d'assistance à distance.
@@ -268,7 +311,7 @@ function Dashboard() {
               ))}
             </div>
             <div className="assist">
-              <h2>Besoin d'une assistance rapide et efficace ?</h2>
+              <h2>Un problème informatique ? Commençons par le rendre clair.</h2>
               <p>
                 Expliquez-moi votre besoin en quelques mots. Je vous réponds rapidement et nous
                 trouvons la meilleure solution ensemble.
@@ -293,15 +336,15 @@ function Dashboard() {
                 <div key={t as string}>
                   <I />
                   <b>{t as string}</b>
-                  <small>Service pratique, clair et sécurisé.</small>
+                  <small>Une méthode expliquée, étape par étape.</small>
                 </div>
               ))}
             </div>
             <div className="secure">
               <ShieldCheck />
               <b>
-                Sécurité et confidentialité avant tout
-                <small>Vos données sont traitées avec le plus haut niveau de sécurité.</small>
+                Vous gardez le contrôle
+                <small>Les modalités d’accès et de confidentialité sont précisées avant chaque intervention.</small>
               </b>
             </div>
           </section>
@@ -392,15 +435,15 @@ function Dashboard() {
         </a>
         <div className="minicontact">
           <h3>Me contacter</h3>
-          <p>Je suis disponible et prêt à vous aider.</p>
+          <p>Choisissez le canal qui vous convient.</p>
           <span>● Disponible</span>
           <span>
             <Zap />
-            Réponse rapide garantie
+            Réponse selon disponibilité
           </span>
           <span>
             <LockKeyhole />
-            Confidentialité assurée
+            Modalités précisées avant intervention
           </span>
         </div>
       </aside>
@@ -419,8 +462,8 @@ function Mission({
 }) {
   return (
     <div className="mission" id="assistance">
-      <h2>Que puis-je résoudre pour vous ?</h2>
-      <p>Choisissez une mission ou expliquez-moi votre besoin.</p>
+      <h2>Par quoi voulez-vous commencer ?</h2>
+      <p>Choisissez la situation la plus proche de la vôtre. Vous pourrez préciser les détails ensuite.</p>
       {missions.map((m) => (
         <button
           className={selected.id === m.id ? "sel" : ""}
@@ -450,7 +493,7 @@ function Mission({
       </div>
       <small className="privacy">
         <LockKeyhole />
-        Vos données sont traitées avec le plus haut niveau de sécurité et ne sont jamais partagées.
+        Les modalités d’accès et de confidentialité sont précisées avant chaque intervention.
       </small>
     </div>
   );
@@ -576,7 +619,7 @@ function Contact() {
     <div className="contact">
       <p>
         <b>Me contacter</b>
-        <small>Je suis disponible et prêt à vous aider.</small>
+        <small>Choisissez le canal qui vous convient.</small>
       </p>
       {items.map(([I, t, d, h]) => (
         <a href={h ?? "#"} key={t}>

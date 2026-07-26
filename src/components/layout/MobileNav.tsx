@@ -146,8 +146,8 @@ export function MobileNav() {
           >
             <header>
               <div>
-                <small>Disponible maintenant</small>
-                <h2 id="mobile-contact-title">Comment souhaitez-vous me joindre ?</h2>
+                <small>Selon disponibilité</small>
+                <h2 id="mobile-contact-title">Choisissez le canal qui vous convient</h2>
               </div>
               <button type="button" onClick={() => setContactOpen(false)} aria-label="Fermer">
                 <X />
@@ -159,7 +159,7 @@ export function MobileNav() {
                 <a href={whatsapp} target="_blank" rel="noreferrer" className="whatsapp">
                   <MessageCircle />
                   <b>
-                    WhatsApp<small>Réponse rapide</small>
+                    WhatsApp<small>Décrire mon besoin</small>
                   </b>
                 </a>
               ) : null}
@@ -167,7 +167,7 @@ export function MobileNav() {
                 <a href={email}>
                   <Mail />
                   <b>
-                    E-mail<small>Décrire mon besoin</small>
+                    E-mail<small>Envoyer les détails</small>
                   </b>
                 </a>
               ) : null}
@@ -175,19 +175,19 @@ export function MobileNav() {
                 <a href={phone}>
                   <Phone />
                   <b>
-                    Téléphone<small>Appel direct</small>
+                    Téléphone<small>Appeler si disponible</small>
                   </b>
                 </a>
               ) : null}
               <button type="button" onClick={openVCard}>
                 <UserPlus />
                 <b>
-                  Enregistrer<small>Ajouter la vCard</small>
+                  Enregistrer<small>Enregistrer le contact</small>
                 </b>
               </button>
             </div>
 
-            <p>Vos informations ne sont ni stockées ni partagées par ce hub.</p>
+            <p>Le hub ne contient pas de formulaire et ne stocke pas votre message. Celui-ci est envoyé par l’application choisie.</p>
           </section>
         </div>
       ) : null}

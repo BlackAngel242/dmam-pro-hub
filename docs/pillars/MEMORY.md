@@ -26,3 +26,11 @@
 - Elle s’efface en descendant, revient en remontant et reste visible près du début et de la fin de page.
 - Contact ouvre une feuille d’actions réelles : WhatsApp, e-mail, téléphone et enregistrement vCard.
 - Les commandes mobiles doivent rester accessibles au clavier, respecter la safe area et mesurer au moins 44 px.
+
+## Acquisition et identité
+
+- Promesse directrice : DMAMPRO transforme un problème numérique flou en prochaine étape claire.
+- Le récit repose sur la méthode, les preuves publiques et la transmission, jamais sur des garanties absolues.
+- L’identité sociale utilise une carte sobre « atelier d’intervention calme », sans cyberpunk ni esthétique IA générique.
+- Le domaine canonique courant est `https://dmam-pro-hub.netlify.app` jusqu’à l’adoption d’un domaine personnalisé.
+- P3 reste obligatoire : articles, récits de projets, GEO/AEO, RSS et mesure des conversions.

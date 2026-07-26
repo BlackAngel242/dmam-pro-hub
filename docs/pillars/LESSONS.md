@@ -83,3 +83,13 @@
 **Solution validée :** relire le fichier comme UTF-8, corriger les séquences touchées et réécrire sans BOM avant compilation.
 
 **Prévention :** rechercher Ã|Â|â après toute création distante contenant des accents, puis vérifier les libellés rendus avant publication.
+
+## 10. Transport Unicode entre JavaScript, PowerShell et Python
+
+**Symptôme :** des accents français deviennent des `?` alors que les fichiers sources étaient initialement UTF-8 valides.
+
+**Cause :** la chaîne de commande a subi une conversion de page de codes avant d’atteindre le script Python.
+
+**Solution validée :** transporter les dictionnaires Unicode sous forme de JSON ASCII avec échappements `\uXXXX`, puis décoder le JSON dans Python avant les remplacements ciblés.
+
+**Prévention :** après toute écriture multilingue, rechercher les motifs lettre–`?`–lettre, exécuter `git diff --check` et inspecter le diff avant compilation. Ne jamais effectuer une correction globale de mojibake sans audit UTF-8 strict.
