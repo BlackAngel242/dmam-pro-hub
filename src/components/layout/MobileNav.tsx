@@ -14,6 +14,7 @@ import { useAutoHideNav } from "@/hooks/useAutoHideNav";
 import { mailtoLink, openVCard, telLink, whatsappLink } from "@/lib/vcard";
 
 const sections = ["assistance", "projects", "notes", "contact"] as const;
+const BOTTOM_EDGE = 96;
 
 export function MobileNav() {
   const [active, setActive] = useState("top");
@@ -23,11 +24,14 @@ export function MobileNav() {
   const { hidden, reveal } = useAutoHideNav(!contactOpen);
 
   useEffect(() => {
-    const updateTop = () => {
+    const updateEdge = () => {
+      const atBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - BOTTOM_EDGE;
       if (window.scrollY < 180) setActive("top");
+      else if (atBottom) setActive("contact");
     };
-    updateTop();
-    window.addEventListener("scroll", updateTop, { passive: true });
+    updateEdge();
+    window.addEventListener("scroll", updateEdge, { passive: true });
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,7 +49,7 @@ export function MobileNav() {
     });
 
     return () => {
-      window.removeEventListener("scroll", updateTop);
+      window.removeEventListener("scroll", updateEdge);
       observer.disconnect();
     };
   }, []);

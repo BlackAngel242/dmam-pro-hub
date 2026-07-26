@@ -1287,3 +1287,29 @@ button {
     opacity: 1;
   }
 }
+
+@media (max-width: 340px) {
+  .featured > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .featured section,
+  .projects article > div {
+    min-width: 0;
+  }
+  .featured section > a {
+    width: 100%;
+  }
+  .projects > article {
+    height: auto;
+    min-height: 112px;
+    grid-template-columns: 55px minmax(0, 1fr);
+  }
+  .projects article > small {
+    grid-column: 2;
+    text-align: left;
+  }
+  .projects article > small b {
+    display: inline;
+    margin: 0 0 0 6px;
+  }
+}
