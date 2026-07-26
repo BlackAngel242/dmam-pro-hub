@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -173,7 +173,8 @@ function Dashboard() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
   const wa = whatsappLink(selected.message);
-  const projects = visibleProjects().slice(0, 3);
+  const projects = visibleProjects();
+  const featuredProject = projects.find((project) => project.featured);
   return (
     <div className="shell" id="top">
       <a className="skip" href="#main">
@@ -392,7 +393,7 @@ function Dashboard() {
             </span>
           </section>
           <section className="deskgrid">
-            <Featured project={projects[0]} />
+            <Featured project={featuredProject} />
             <Projects projects={projects} />
             <div className="rightstack">
               <Tip />
@@ -572,35 +573,112 @@ function Tags() {
   );
 }
 function Projects({ projects }: { projects: ReturnType<typeof visibleProjects> }) {
+  const projectList = projects.filter((project) => !project.featured);
+  const pageSize = 3;
+  const pageCount = Math.max(1, Math.ceil(projectList.length / pageSize));
+  const [page, setPage] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+  const visible = projectList.slice(page * pageSize, page * pageSize + pageSize);
+
+  useEffect(() => {
+    if (pageCount < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
+    const timer = window.setInterval(() => setPage((current) => (current + 1) % pageCount), 15_000);
+    return () => window.clearInterval(timer);
+  }, [pageCount, paused]);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    listRef.current?.querySelectorAll("article").forEach((card, index) => {
+      card.animate(
+        [
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        { duration: 360, delay: index * 70, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "both" },
+      );
+    });
+  }, [page]);
+
+  const goTo = (next: number) => setPage((next + pageCount) % pageCount);
+
   return (
     <section className="module projects" id="projects">
       <header>
         <h2>Mes projets & contributions</h2>
-        <a href={VCARD_DATA.github}>
+        <a href={VCARD_DATA.github} target="_blank" rel="noreferrer">
           Voir tous les projets <ArrowRight />
         </a>
       </header>
-      <nav>
-        <b>En cours 3</b>
-        <span>Terminés</span>
-        <span>Tous</span>
-      </nav>
-      {projects.map((p, n) => (
-        <article key={p.id}>
-          <i className="plogo">{n ? "◉" : "Dr"}</i>
-          <div>
-            <h3>
-              {p.title}
-              <em>{p.category === "contribution" ? "Aperçu" : "Public"}</em>
-            </h3>
-            <p>{p.summary}</p>
-            <Tags />
-          </div>
-          <small>
-            Dernière activité<b>● {n ? (n === 1 ? "2 jours" : "5 jours") : "Aujourd'hui"}</b>
-          </small>
-        </article>
-      ))}
+      <div
+        className="project-deck"
+        ref={listRef}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+        }}
+      >
+        {visible.map((project) => {
+          const href = safeProjectWebsiteUrl(project);
+          return (
+            <article key={project.id}>
+              {project.image ? (
+                <img src={project.image} alt="" width={110} height={110} loading="lazy" />
+              ) : (
+                <i className="plogo" aria-hidden="true">
+                  {project.title.slice(0, 2)}
+                </i>
+              )}
+              <div>
+                <h3>
+                  {href ? (
+                    <a href={href} target="_blank" rel="noreferrer">
+                      {project.title}
+                    </a>
+                  ) : (
+                    project.title
+                  )}
+                  <em>
+                    {project.category === "contribution"
+                      ? "Contribution"
+                      : project.visibility === "public"
+                        ? "Public"
+                        : "Aperçu"}
+                  </em>
+                </h3>
+                <p>{project.summary}</p>
+                <p className="tags">
+                  {(project.technologies?.slice(0, 3) ?? [project.category, project.status]).map(
+                    (tag) => (
+                      <span key={tag}>{tag}</span>
+                    ),
+                  )}
+                </p>
+              </div>
+              <small>
+                Statut<b>{project.status}</b>
+              </small>
+            </article>
+          );
+        })}
+      </div>
+      {pageCount > 1 ? (
+        <footer className="project-pagination" aria-label="Navigation des projets">
+          <button type="button" onClick={() => goTo(page - 1)} aria-label="Projets précédents">
+            ‹
+          </button>
+          <span aria-live="polite">
+            {page + 1} / {pageCount}
+            <small>{paused ? "Lecture en pause" : "Rotation toutes les 15 s"}</small>
+          </span>
+          <button type="button" onClick={() => goTo(page + 1)} aria-label="Projets suivants">
+            ›
+          </button>
+        </footer>
+      ) : null}
       <p className="note">
         <Info />
         Les projets privés n'apparaissent pas dans cette vue.

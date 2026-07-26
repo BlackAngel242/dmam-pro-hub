@@ -41,6 +41,7 @@ export const PROJECTS: Project[] = [
     urlKind: "temporary",
     showRepository: false,
     featured: true,
+    image: "/assets/projects/drshop-og.jpg",
   },
   {
     id: "engagetrack",
@@ -54,6 +55,7 @@ export const PROJECTS: Project[] = [
     urlKind: "stable",
     showRepository: false,
     featured: false,
+    image: "/assets/projects/engagetrack-og.png",
   },
   {
     id: "bisomaptech",
@@ -69,6 +71,7 @@ export const PROJECTS: Project[] = [
     contributionLabel: "Projet auquel je contribue",
     technologies: ["React", "TypeScript", "Supabase", "Leaflet"],
     featured: false,
+    image: "/assets/projects/bisomaptech-og.png",
   },
   {
     id: "citoyen242",

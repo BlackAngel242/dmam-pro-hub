@@ -459,7 +459,7 @@ button {
 .projects > nav {
   display: none;
 }
-.projects > article {
+.project-deck > article {
   height: 103px;
   padding: 13px 20px;
   display: grid;
@@ -866,7 +866,7 @@ button {
     display: flex;
     gap: 22px;
   }
-  .midcontent .projects > article {
+  .midcontent .project-deck > article {
     height: 100px;
     margin: 10px 0;
     padding: 13px 10px;
@@ -1305,7 +1305,7 @@ img {
   .featured section > a {
     width: 100%;
   }
-  .projects > article {
+  .project-deck > article {
     height: auto;
     min-height: 112px;
     grid-template-columns: 55px minmax(0, 1fr);
@@ -1590,5 +1590,96 @@ img {
   from {
     opacity: 0;
     transform: translateY(10px);
+  }
+}
+
+.featured-project-image {
+  width: 85px;
+  height: 89px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #fff;
+}
+.project-deck > article > img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  align-self: start;
+  border: 1px solid #31566b;
+  border-radius: 4px;
+  background: #fff;
+}
+.projects article h3 > a {
+  color: inherit;
+  text-decoration: none;
+}
+.projects article h3 > a:hover,
+.projects article h3 > a:focus-visible {
+  color: #72c9f4;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.project-pagination {
+  min-height: 42px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+}
+.project-pagination button {
+  width: 34px;
+  height: 30px;
+  border: 1px solid #31566b;
+  border-radius: 4px;
+  background: #09273a;
+  color: #d9ebf3;
+  font-size: 20px;
+}
+.project-pagination > span {
+  min-width: 120px;
+  color: #d9ebf3;
+  text-align: center;
+  font-size: 12px;
+}
+.project-pagination small {
+  display: block;
+  color: #8fa7b5;
+  font-size: 9px;
+}
+.project-deck article {
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-deck article {
+    will-change: auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  .deskgrid .project-deck > article {
+    height: 76px;
+    padding: 8px 12px;
+    grid-template-columns: 48px minmax(0, 1fr) 66px;
+    gap: 9px;
+  }
+  .deskgrid .project-deck > article > img,
+  .deskgrid .project-deck .plogo {
+    width: 46px;
+    height: 46px;
+  }
+  .deskgrid .project-deck article p:not(.tags) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  .deskgrid .project-pagination {
+    min-height: 38px;
+    padding-block: 4px;
+  }
+  .deskgrid .projects .note {
+    padding-block: 5px !important;
   }
 }

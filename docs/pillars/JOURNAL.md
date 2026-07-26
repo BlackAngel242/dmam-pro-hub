@@ -45,3 +45,7 @@ Chronologie factuelle des travaux. Chaque entrée note le contexte, l'action, le
 ## 2026-07-26 — Hub interaction layer
 
 Added a real command palette, privacy-first guided need assistant, responsive dialogs, WCAG contrast correction, and Playwright/Axe acceptance gate. Final local evidence: 40 passed, 8 conditional skips, 0 failed.
+
+## 2026-07-26 — Project gallery
+
+Cached verified project imagery locally: DrShop OG, EngageTrack 512 icon, and BisoMapTech public icon fallback because its declared /og-image.png returns 404. The featured project is excluded from the rotating project deck. Deck rotates every 15 seconds, pauses on hover/focus, supports manual navigation, and respects reduced motion.
